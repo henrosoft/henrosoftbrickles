@@ -1,0 +1,36 @@
+<project name="Brickles" default="compile" basedir=".">
+
+	<description>
+		Henrosoft version of Breakout
+	</description>
+
+	<target name="compile">
+		<javac srcdir="slickbrickles" destdir="." debug="true" target="5">
+			<compilerarg value="-Xlint"/>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar jarfile="Brickles.jar" update="true">
+			<manifest>
+				<attribute name="Main-Class" value="slickbrickles.ui.Main"/>
+			</manifest>
+			<fileset dir=".">
+				<include name="slickbrickles/**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="." defaultexcludes="false">
+				<include name="**/*.class"/>
+				<include name="**/#*#"/>
+				<include name="**/*.jar"/>
+				<include name="**/*~"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="all" depends="clean,compile,jar"/>
+</project>
