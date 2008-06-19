@@ -29,7 +29,7 @@ public class StateHandler extends StateBasedGame{
         super("Brickles");
         try {
             myContainer = new AppGameContainer(this,SIZE_X,SIZE_Y,true);
-            myContainer.setTargetFrameRate((int)(1000/SLEEP_TIME));
+            myContainer.setTargetFrameRate(1000/SLEEP_TIME);
             myContainer.setShowFPS(true);
         } catch (SlickException ex) {
             ex.printStackTrace();
