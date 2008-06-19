@@ -50,13 +50,13 @@ public class MainGame extends BasicGameState{
     
     /** Creates a new instance of MainGame */
     private org.newdawn.slick.Color myBackground;
-    private StateHandler game;
+    private StateHandeler game;
     private static Pad thePad;
     private World world;
     private Font menuFont;
     private int ID = 22222;
     private LevelMaker maker;
-    public MainGame(StateHandler sbg) {
+    public MainGame(StateHandeler sbg) {
         super();
         game = sbg;
         world = new World(v(0,0), 10, new QuadSpaceStrategy(20,5));
@@ -81,10 +81,15 @@ public class MainGame extends BasicGameState{
         maker.createLevel1();
     }
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException{
-        stateBasedGame.getContainer().getInput().addListener(this);
         menuFont = new TrueTypeFont(new java.awt.Font(null, java.awt.Font.BOLD, 20), true);
     }
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) throws SlickException {
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        game.getContainer().getInput().addListener(this);
+    }
+    public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+        game.getContainer().getInput().removeListener(this);
+    }
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) throws SlickException {stateBasedGame.getContainer().getInput().addListener(this);
        preWorld(gameContainer, g);
        g.setBackground(myBackground);
        BodyList bodies = world.getBodies();
@@ -149,17 +154,13 @@ public class MainGame extends BasicGameState{
 
     private void postWorld(GameContainer gameContainer, Graphics g) {
         g.setColor(Color.red);
-        drawMenuItem("Q - Quit", g, 1);
-        drawMenuItem("R - Restart", g, 2);
-        drawMenuItem("P - Pause", g, 3);
-        drawMenuItem("U - Unpause (resume)", g, 4);
-        drawMenuItem("M - Main Menu", g, 5);
+        drawMenuItem("Q - Quit", menuFont, g, 1);
+        drawMenuItem("R - Restart", menuFont, g, 2);
+        drawMenuItem("P - Pause", menuFont, g, 3);
+        drawMenuItem("U - Unpause (resume)", menuFont, g, 4);
+        drawMenuItem("M - Main Menu", menuFont, g, 5);
     }
-    public void drawMenuItem(String s, Graphics g, int level)
-    {
-        g.setFont(menuFont);
-        g.drawString(s, Main.state.SIZE_X-10-menuFont.getWidth(s),Main.state.SIZE_Y-(menuFont.getHeight(s))*level);
-    }
+
 
     public int getID() {
         return ID;

@@ -37,15 +37,20 @@ public class MainMenu extends BasicGameState{
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        stateBasedGame.getContainer().getInput().addListener(this);
         menuFont = new TrueTypeFont(new java.awt.Font(null, java.awt.Font.BOLD, 50), true);
     }
-
+    public void enter(GameContainer container, StateBasedGame game) throws SlickException {
+        game.getContainer().getInput().addListener(this);
+    }
+    public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+        game.getContainer().getInput().removeListener(this);
+    }
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         graphics.setBackground(new Color(0,0,0));
         graphics.setFont(menuFont);
         graphics.setColor(new Color(255,0,0));
         drawCenteredString("Press Space To Start The Game", graphics, 0);
+        drawCenteredString("Press 'M' to create a level", graphics, 1);
     }
     public void drawCenteredString(String s, Graphics g, int level)
     {
@@ -56,8 +61,12 @@ public class MainMenu extends BasicGameState{
     }
     public void keyPressed(int key, char c)
     {
-       if(key == Input.KEY_SPACE)
+       if(key == Input.KEY_M)
+           Main.state.enterState(33333);
+       else if(key == Input.KEY_SPACE)
+       {
            Main.state.enterState(22222);
+       }
     }
     
 }

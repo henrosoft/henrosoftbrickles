@@ -18,13 +18,16 @@ import net.phys2d.raw.shapes.Circle;
 import net.phys2d.raw.shapes.Line;
 import net.phys2d.raw.shapes.Polygon;
 import org.newdawn.slick.Color;
+import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
+import slickbrickles.ui.Main;
 
 /**
  *
  * @author henry
  */
 public class Utils {
+
     
     /** Creates a new instance of Utils */
     public static Vector2f v(Number x, Number y) {
@@ -42,7 +45,11 @@ public class Utils {
 	public static Dimension d(Vector2f d) {
 		return d(d.getX(), d.getY());
 	}
-
+        public static void drawMenuItem(String s, Font font, Graphics g, int level)
+        {
+            g.setFont(font);
+            g.drawString(s, Main.state.SIZE_X-10-font.getWidth(s),Main.state.SIZE_Y-(font.getHeight(s))*level);
+        }
 	public static float range(Number minR, Number maxR) {
 		float min = minR.floatValue();
 		float max = maxR.floatValue();

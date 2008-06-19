@@ -14,6 +14,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+import slickbrickles.util.LevelMaker;
 
 /**
  *
@@ -29,7 +30,7 @@ public class StateHandler extends StateBasedGame{
         super("Brickles");
         try {
             myContainer = new AppGameContainer(this,SIZE_X,SIZE_Y,true);
-            myContainer.setTargetFrameRate(1000/SLEEP_TIME);
+            myContainer.setTargetFrameRate((int)(1000/SLEEP_TIME));
             myContainer.setShowFPS(true);
         } catch (SlickException ex) {
             ex.printStackTrace();
@@ -48,8 +49,10 @@ public class StateHandler extends StateBasedGame{
         }
     }
     public void initStatesList(GameContainer gameContainer) throws SlickException {
-        addState(new MainMenu());
+        addState(new MainMenu());   
         addState(Main.theGame = new MainGame(this));
+        addState(new LevelMaker());
+        
     }
     
 }
