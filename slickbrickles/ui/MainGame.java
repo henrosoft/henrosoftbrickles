@@ -50,13 +50,13 @@ public class MainGame extends BasicGameState{
     
     /** Creates a new instance of MainGame */
     private org.newdawn.slick.Color myBackground;
-    private StateHandeler game;
+    private StateHandler game;
     private static Pad thePad;
     private World world;
     private Font menuFont;
     private int ID = 22222;
     private LevelMaker maker;
-    public MainGame(StateHandeler sbg) {
+    public MainGame(StateHandler sbg) {
         super();
         game = sbg;
         world = new World(v(0,0), 10, new QuadSpaceStrategy(20,5));

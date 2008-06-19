@@ -17,9 +17,9 @@ import slickbrickles.*;
  */
 public class Main {
     public static MainGame theGame;
-    public static StateHandeler state;
+    public static StateHandler state;
     public static void main(String[] args) {
-        state = new StateHandeler();
+        state = new StateHandler();
         state.start();
     //    theGame.start();
     }
