@@ -5,9 +5,7 @@
 	</description>
 
 	<target name="compile">
-		<javac srcdir="slickbrickles" destdir="." debug="true" target="5">
-			<compilerarg value="-Xlint"/>
-		</javac>
+		<javac srcdir="slickbrickles" destdir="." debug="true" target="5"/>
 	</target>
 
 	<target name="jar" depends="compile">
@@ -26,8 +24,8 @@
 			<fileset dir="." defaultexcludes="false">
 				<include name="**/*.class"/>
 				<include name="**/#*#"/>
-				<include name="**/*.jar"/>
 				<include name="**/*~"/>
+				<include name="**/*.jar"/>
 			</fileset>
 		</delete>
 	</target>
