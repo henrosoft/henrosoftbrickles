@@ -36,7 +36,7 @@ public class SplitBrick extends Brick{
     }
     public void splitBall(Ball b)
     {
-        Body newB = new Ball(getPosition().getX(),getPosition().getY(),b.getSize().x, b.getSize().y,getVelocity().getX()*1.2f,getVelocity().getY()/1.2f);
+        Body newB = new Ball(getPosition().getX(),getPosition().getY(),getVelocity().getX()*1.2f,getVelocity().getY()/1.2f);
         Main.theGame.add(newB);
     }
     

@@ -31,6 +31,8 @@ import slickbrickles.bodies.Pad;
 import slickbrickles.bodies.SplitBrick;
 import slickbrickles.bodies.UnbreakableBrick;
 import slickbrickles.ui.Main;
+import slickbrickles.ui.MainGame;
+import slickbrickles.ui.MainMenu;
 import static slickbrickles.util.Utils.*;
 /**
  *
@@ -39,7 +41,7 @@ import static slickbrickles.util.Utils.*;
 public class LevelMaker extends BasicGameState{
     private World world;
     private Font menuFont;
-    private int ID = 33333;
+    public static int ID = 33333;
     private List<Brick> bricks;
     private Brick cursor;
     private String position = "0 0";
@@ -88,17 +90,26 @@ public class LevelMaker extends BasicGameState{
     }
     public void postWorld(Graphics g)
     {
-        drawMenuItem("Q - Quit", menuFont, g, 1);
-        drawMenuItem(position, menuFont, g, 2);
-        drawMenuItem("" + numBricks, menuFont, g, 3);
+        drawBottomRight("Q - Quit", menuFont, g, 1);
+        drawBottomRight("M - Menu", menuFont, g, 2);
+        drawBottomRight("T - Test Level", menuFont, g, 3);
+        drawBottomRight(position, menuFont, g, 4);
+        drawBottomRight("" + numBricks, menuFont, g, 5);
     }
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
     }
     
     public void mouseMoved(int oldx, int oldy, int newx, int newy) {
         int gridSeperation = 5;
-        cursor.setPosition(((int)(newx/gridSeperation))*gridSeperation,((int)(newy/gridSeperation))*gridSeperation);
-        position = "" + ((int)(newx/gridSeperation))*gridSeperation + " " + ((int)(newy/gridSeperation))*gridSeperation;
+        int y = ((int)newy/(cursor.SIZE_Y+gridSeperation));
+        int x;
+        if(y%2==0)
+            x = ((int)newx/(cursor.SIZE_X+gridSeperation))*(cursor.SIZE_X+gridSeperation);
+        else 
+            x = (int)((double)((((int)newx/(cursor.SIZE_X+gridSeperation)))+.5)*(cursor.SIZE_X+gridSeperation));
+        y *= (cursor.SIZE_Y+gridSeperation);
+        cursor.setPosition(x,y);
+        position = "" + x + " " + y;
     }
     public void mouseClicked(int button, int x, int y, int clickCount) {
     }
@@ -116,6 +127,26 @@ public class LevelMaker extends BasicGameState{
     public void keyPressed(int key, char c){
         if(key == Input.KEY_Q)
            System.exit(0);
+        else if(key == Input.KEY_M)
+           Main.state.enterState(MainMenu.ID);
+        else if(key == Input.KEY_T)
+           testLevel();
+    }
+    public void testLevel()
+    {
+        world = Main.theGame.getWorld();
+        world.clear();
+        createWalls();
+        Body body = new Pad(300,5);
+        world.add(body);
+       // body = new Ball(300,300,-120*2,-40*2);
+      //  world.add(body);
+        for(Brick b: bricks)
+        {
+            
+            world.add(b);
+        }
+        Main.state.enterState(MainGame.ID);
     }
     public void keyReleased(int key, char c){
     }
@@ -142,10 +173,10 @@ public class LevelMaker extends BasicGameState{
         createWalls();
         Body b = new Pad(300,5);
         world.add(b);
-        b = new Ball(300,300,30,30,-120*2,-40*2);
-        world.add(b);
-        b = new Ball(400,400,30,30,50*2,-130*2);
-        world.add(b);
+       // b = new Ball(300,300,30,30,-120*2,-40*2);
+       // world.add(b);
+      //  b = new Ball(400,400,30,30,50*2,-130*2);
+      //  world.add(b);
         double numCols = (Main.state.SIZE_X-200)/60.0;
         double fractionHeight = .4;
         double numRows = (Main.state.SIZE_Y*fractionHeight)/30.0;

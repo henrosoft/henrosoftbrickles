@@ -24,20 +24,23 @@ import slickbrickles.Addable;
 import slickbrickles.bodies.Brick;
 import slickbrickles.ui.Main;
 import slickbrickles.ui.MainGame;
+import slickbrickles.ui.StateHandler;
 import static slickbrickles.util.Utils.*;
 /**
  *
  * @author henry
  */
 public class Ball extends Addable{
+    public static int SIZE_X = 30;
+    public static int SIZE_Y = 30;
     private Color myColor;
     
-    public Ball(float x, float y, float sx, float sy, float vx, float vy) {
-        super(new Circle(sx/2f),10);
+    public Ball(float x, float y,float vx, float vy) {
+        super(new Circle(SIZE_X/2f),10);
         setPosition(x,y);
         adjustVelocity(v(vx,vy));
         myColor = new Color(0,0,0);
-        mySize = new Point2D.Float(sx,sy);
+        mySize = new Point2D.Float(SIZE_X,SIZE_Y);
     }
 
     public void render(Graphics g) {
@@ -46,6 +49,8 @@ public class Ball extends Addable{
     }
 
     public void update() { 
+        if(getPosition().getY()>StateHandler.SIZE_Y)
+            Main.theGame.remove(this);
     }
     public Point2D.Float getSize() {
         return mySize;

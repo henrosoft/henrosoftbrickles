@@ -10,6 +10,8 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import slickbrickles.Button;
+import slickbrickles.util.LevelMaker;
+import static slickbrickles.util.Utils.*;
 /*
  * MainMenu.java
  *
@@ -28,7 +30,7 @@ public class MainMenu extends BasicGameState{
     /** Creates a new instance of MainMenu */
     private Font menuFont;
     private ArrayList<Button> myButtons;
-    private int ID = 11111;
+    public static int ID = 11111;
     public MainMenu() {
     }
 
@@ -49,24 +51,29 @@ public class MainMenu extends BasicGameState{
         graphics.setBackground(new Color(0,0,0));
         graphics.setFont(menuFont);
         graphics.setColor(new Color(255,0,0));
-        drawCenteredString("Press Space To Start The Game", graphics, 0);
-        drawCenteredString("Press 'M' to create a level", graphics, 1);
-    }
-    public void drawCenteredString(String s, Graphics g, int level)
-    {
-        int x = (int)((Main.state.SIZE_X-menuFont.getWidth(s))/2.0);
-        g.drawString(s,x,200+menuFont.getHeight(s)*level);
+        drawCenteredString("Press space to start the game in arrow key mode", menuFont, graphics, 0);
+        drawCenteredString("Click anywhere to start the game in mouse mode", menuFont, graphics, 1);
+        drawCenteredString("Press 'M' to create a level", menuFont, graphics, 2);
+        drawCenteredString("Press 'Q' to quit the game", menuFont, graphics, 3);
     }
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
+    }
+    public void mousePressed(int button, int x, int y)
+    {
+        Main.theGame.setMouseEnabled(true);
+        Main.state.enterState(MainGame.ID);
     }
     public void keyPressed(int key, char c)
     {
        if(key == Input.KEY_M)
-           Main.state.enterState(33333);
+           Main.state.enterState(LevelMaker.ID);
        else if(key == Input.KEY_SPACE)
        {
-           Main.state.enterState(22222);
+           Main.theGame.setMouseEnabled(false);
+           Main.state.enterState(MainGame.ID);
        }
+       else if(key == Input.KEY_Q)
+           System.exit(0);
     }
     
 }

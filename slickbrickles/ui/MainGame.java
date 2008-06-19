@@ -41,6 +41,7 @@ import slickbrickles.bodies.Pad;
 import slickbrickles.bodies.SplitBrick;
 import slickbrickles.bodies.UnbreakableBrick;
 import slickbrickles.util.LevelMaker;
+import slickbrickles.util.UserInfo;
 import static slickbrickles.util.Utils.*;
 /**
  *
@@ -49,27 +50,84 @@ import static slickbrickles.util.Utils.*;
 public class MainGame extends BasicGameState{
     
     /** Creates a new instance of MainGame */
-    private org.newdawn.slick.Color myBackground;
-    private StateHandler game;
-    private static Pad thePad;
-    private World world;
-    private Font menuFont;
-    private int ID = 22222;
-    private LevelMaker maker;
+    protected org.newdawn.slick.Color myBackground;
+    protected StateHandler game;
+    protected static Pad thePad;
+    protected World world;
+    protected Font menuFont;
+    protected Font centerFont;
+    public static int ID = 22222;
+    protected LevelMaker maker;
+    protected boolean begun = false;
+    protected boolean mouseEnabled = false;
+    protected UserInfo info;
     public MainGame(StateHandler sbg) {
         super();
         game = sbg;
+        info = new UserInfo("henrybrad");
         world = new World(v(0,0), 10, new QuadSpaceStrategy(20,5));
 	world.enableRestingBodyDetection(.1f, .1f, .1f);
         world.setDamping(1);
         maker = new LevelMaker(world);
-        maker.createLevel1();
         myBackground = new org.newdawn.slick.Color(100,100,100);
     }
-    
+    public void setMouseEnabled(boolean m)
+    {
+        mouseEnabled = m;
+    }
+    public boolean getMouseEnabled()
+    {
+        return mouseEnabled;
+    }
+    public void setWorld(World world) {
+        this.world = world;
+    }
+    public void begin()
+    {
+        begun = true;
+    }
+    public boolean hasBegun()
+    {
+        return begun;
+    }
+    public World getWorld() {
+        return world;
+    }
+    public void resetPad()
+    {
+        BodyList bodies = world.getBodies();
+        for(int i = 0; i<bodies.size(); i++)
+        {
+            if(bodies.get(i) instanceof Pad)
+                ((Pad)bodies.get(i)).resetBall();
+        }
+    }
     public void remove(Body b)
     {
         world.remove(b);
+        if(ballCount() <= 0)
+            if(info.getLives() == 0)
+            {
+                info.reset();
+                restart();
+            }
+            else
+            {
+                info.loseLife();
+                begun = false;
+                resetPad();
+            }
+    }
+    public int ballCount()
+    {
+        int count = 0;
+        BodyList bodies = world.getBodies();
+        for(int i = 0; i<bodies.size(); i++)
+        {
+            if(bodies.get(i) instanceof Ball)
+                count++;
+        }
+        return count;
     }
     public void add(Body b)
     {
@@ -78,10 +136,14 @@ public class MainGame extends BasicGameState{
     public void restart()
     {
         world.clear();
+        begun = false;
         maker.createLevel1();
     }
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException{
         menuFont = new TrueTypeFont(new java.awt.Font(null, java.awt.Font.BOLD, 20), true);
+        centerFont = new TrueTypeFont(new java.awt.Font(null, java.awt.Font.BOLD, 50), true);
+        info.init();
+        maker.createLevel1();
     }
     public void enter(GameContainer container, StateBasedGame game) throws SlickException {
         game.getContainer().getInput().addListener(this);
@@ -89,7 +151,7 @@ public class MainGame extends BasicGameState{
     public void leave(GameContainer container, StateBasedGame game) throws SlickException {
         game.getContainer().getInput().removeListener(this);
     }
-    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) throws SlickException {stateBasedGame.getContainer().getInput().addListener(this);
+    public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics g) throws SlickException {
        preWorld(gameContainer, g);
        g.setBackground(myBackground);
        BodyList bodies = world.getBodies();
@@ -111,9 +173,21 @@ public class MainGame extends BasicGameState{
     }
 
     public void mouseMoved(int oldx, int oldy, int newx, int newy) {
+       BodyList bodies = world.getBodies();
+       for(int i = 0; i<bodies.size(); i++)
+       {
+           if(bodies.get(i) instanceof Addable)
+            ((Addable)bodies.get(i)).mouseMoved(oldx,oldy,newx,newy);
+       }
     }
 
-    public void mouseClicked(int button, int x, int y, int clickCount) {
+    public void mousePressed(int button, int x, int y) {
+       BodyList bodies = world.getBodies();
+       for(int i = 0; i<bodies.size(); i++)
+       {
+           if(bodies.get(i) instanceof Addable)
+            ((Addable)bodies.get(i)).mousePressed(button,x,y);
+       }
     }
 
     public void keyPressed(int key, char c)
@@ -127,7 +201,7 @@ public class MainGame extends BasicGameState{
        else if(key == Input.KEY_U)
            game.getContainer().resume();
        else if(key == Input.KEY_M)
-           game.enterState(11111);
+           game.enterState(MainMenu.ID);
        else
        {
            BodyList bodies = world.getBodies();
@@ -153,12 +227,19 @@ public class MainGame extends BasicGameState{
     }
 
     private void postWorld(GameContainer gameContainer, Graphics g) {
+        info.render(g);
+        g.setColor(Color.black);
+        if(!hasBegun())
+            if(mouseEnabled)
+                drawCenteredString("Click anywhere to fire the ball", centerFont, g, 1);
+            else
+                drawCenteredString("Press space to fire the ball", centerFont, g, 1);
         g.setColor(Color.red);
-        drawMenuItem("Q - Quit", menuFont, g, 1);
-        drawMenuItem("R - Restart", menuFont, g, 2);
-        drawMenuItem("P - Pause", menuFont, g, 3);
-        drawMenuItem("U - Unpause (resume)", menuFont, g, 4);
-        drawMenuItem("M - Main Menu", menuFont, g, 5);
+        drawBottomRight("Q - Quit", menuFont, g, 1);
+        drawBottomRight("R - Restart", menuFont, g, 2);
+        drawBottomRight("P - Pause", menuFont, g, 3);
+        drawBottomRight("U - Unpause (resume)", menuFont, g, 4);
+        drawBottomRight("M - Main Menu", menuFont, g, 5);
     }
 
 

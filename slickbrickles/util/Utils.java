@@ -27,7 +27,6 @@ import slickbrickles.ui.Main;
  * @author henry
  */
 public class Utils {
-
     
     /** Creates a new instance of Utils */
     public static Vector2f v(Number x, Number y) {
@@ -45,10 +44,21 @@ public class Utils {
 	public static Dimension d(Vector2f d) {
 		return d(d.getX(), d.getY());
 	}
-        public static void drawMenuItem(String s, Font font, Graphics g, int level)
+        public static void drawBottomRight(String s, Font font, Graphics g, int level)
         {
             g.setFont(font);
             g.drawString(s, Main.state.SIZE_X-10-font.getWidth(s),Main.state.SIZE_Y-(font.getHeight(s))*level);
+        }
+        public static void drawTopRight(String s, Font font, Graphics g, int level)
+        {
+            g.setFont(font);
+            g.drawString(s, Main.state.SIZE_X-10-font.getWidth(s),(font.getHeight(s))*level);
+        }
+        public static void drawCenteredString(String s, Font font, Graphics g, int level)
+        {
+            int x = (int)((Main.state.SIZE_X-font.getWidth(s))/2.0);
+            g.setFont(font);
+            g.drawString(s,x,200+font.getHeight(s)*level);
         }
 	public static float range(Number minR, Number maxR) {
 		float min = minR.floatValue();
