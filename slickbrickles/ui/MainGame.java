@@ -9,37 +9,22 @@
 
 package slickbrickles.ui;
 
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.util.ArrayList;
 import net.phys2d.raw.Body;
 import net.phys2d.raw.BodyList;
-import net.phys2d.raw.StaticBody;
 import net.phys2d.raw.World;
-import net.phys2d.raw.collide.ColliderFactory;
-import net.phys2d.raw.shapes.Line;
 import net.phys2d.raw.strategies.QuadSpaceStrategy;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.BigImage;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.lwjgl.LWJGLException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import slickbrickles.Button;
 import slickbrickles.Addable;
-import slickbrickles.bodies.Brick;
 import slickbrickles.bodies.Ball;
 import slickbrickles.bodies.Pad;
-import slickbrickles.bodies.SplitBrick;
-import slickbrickles.bodies.UnbreakableBrick;
 import slickbrickles.util.LevelMaker;
 import slickbrickles.util.UserInfo;
 import static slickbrickles.util.Utils.*;
@@ -50,7 +35,7 @@ import static slickbrickles.util.Utils.*;
 public class MainGame extends BasicGameState{
     
     /** Creates a new instance of MainGame */
-    protected org.newdawn.slick.Color myBackground;
+    protected Color myBackground;
     protected StateHandler game;
     protected static Pad thePad;
     protected World world;
@@ -69,7 +54,7 @@ public class MainGame extends BasicGameState{
 	world.enableRestingBodyDetection(.1f, .1f, .1f);
         world.setDamping(1);
         maker = new LevelMaker(world);
-        myBackground = new org.newdawn.slick.Color(100,100,100);
+        myBackground = new Color(100,100,100);
     }
     public void setMouseEnabled(boolean m)
     {

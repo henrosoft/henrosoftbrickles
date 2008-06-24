@@ -9,21 +9,12 @@
 
 package slickbrickles.bodies;
 
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import net.phys2d.math.ROVector2f;
-import net.phys2d.math.Vector2f;
 import net.phys2d.raw.shapes.Circle;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import slickbrickles.*;
 import slickbrickles.Addable;
-import slickbrickles.bodies.Brick;
 import slickbrickles.ui.Main;
-import slickbrickles.ui.MainGame;
 import slickbrickles.ui.StateHandler;
 import static slickbrickles.util.Utils.*;
 /**

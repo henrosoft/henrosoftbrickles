@@ -20,7 +20,7 @@ import net.phys2d.raw.shapes.Polygon;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.Graphics;
-import slickbrickles.ui.Main;
+import slickbrickles.ui.StateHandler;
 
 /**
  *
@@ -47,16 +47,16 @@ public class Utils {
         public static void drawBottomRight(String s, Font font, Graphics g, int level)
         {
             g.setFont(font);
-            g.drawString(s, Main.state.SIZE_X-10-font.getWidth(s),Main.state.SIZE_Y-(font.getHeight(s))*level);
+            g.drawString(s, StateHandler.SIZE_X-10-font.getWidth(s),StateHandler.SIZE_Y-(font.getHeight(s))*level);
         }
         public static void drawTopRight(String s, Font font, Graphics g, int level)
         {
             g.setFont(font);
-            g.drawString(s, Main.state.SIZE_X-10-font.getWidth(s),(font.getHeight(s))*level);
+            g.drawString(s, StateHandler.SIZE_X-10-font.getWidth(s),(font.getHeight(s))*level);
         }
         public static void drawCenteredString(String s, Font font, Graphics g, int level)
         {
-            int x = (int)((Main.state.SIZE_X-font.getWidth(s))/2.0);
+            int x = (int)((StateHandler.SIZE_X-font.getWidth(s))/2.0);
             g.setFont(font);
             g.drawString(s,x,200+font.getHeight(s)*level);
         }

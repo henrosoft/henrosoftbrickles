@@ -15,7 +15,6 @@ import net.phys2d.raw.Body;
 import net.phys2d.raw.StaticBody;
 import net.phys2d.raw.World;
 import net.phys2d.raw.shapes.Line;
-import net.phys2d.raw.strategies.QuadSpaceStrategy;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
 import org.newdawn.slick.GameContainer;
@@ -25,12 +24,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import slickbrickles.bodies.Ball;
 import slickbrickles.bodies.Brick;
 import slickbrickles.bodies.Pad;
-import slickbrickles.bodies.SplitBrick;
-import slickbrickles.bodies.UnbreakableBrick;
 import slickbrickles.ui.Main;
+import slickbrickles.ui.StateHandler;
 import slickbrickles.ui.MainGame;
 import slickbrickles.ui.MainMenu;
 import static slickbrickles.util.Utils.*;
@@ -58,9 +55,9 @@ public class LevelMaker extends BasicGameState{
     }
     public void createWalls()
     {
-        StaticBody w2 = new StaticBody(new Line(Main.state.SIZE_X,Main.state.SIZE_Y,Main.state.SIZE_X,0));
-        StaticBody w3 = new StaticBody(new Line(Main.state.SIZE_X,0,0,0));
-        StaticBody w4 = new StaticBody(new Line(0,0,0,Main.state.SIZE_Y));
+        StaticBody w2 = new StaticBody(new Line(StateHandler.SIZE_X,StateHandler.SIZE_Y,StateHandler.SIZE_X,0));
+        StaticBody w3 = new StaticBody(new Line(StateHandler.SIZE_X,0,0,0));
+        StaticBody w4 = new StaticBody(new Line(0,0,0,StateHandler.SIZE_Y));
         w2.setRestitution(1);
         w3.setRestitution(1);
         w4.setRestitution(1);
@@ -177,9 +174,9 @@ public class LevelMaker extends BasicGameState{
        // world.add(b);
       //  b = new Ball(400,400,30,30,50*2,-130*2);
       //  world.add(b);
-        double numCols = (Main.state.SIZE_X-200)/60.0;
+        double numCols = (StateHandler.SIZE_X-200)/60.0;
         double fractionHeight = .4;
-        double numRows = (Main.state.SIZE_Y*fractionHeight)/30.0;
+        double numRows = (StateHandler.SIZE_Y*fractionHeight)/30.0;
         for (int i = 0; i < numCols; i++) {
             for (int j = 0; j < numRows; j++) {
               //  if(j==3)

@@ -11,7 +11,6 @@ package slickbrickles.bodies;
 
 import net.phys2d.raw.Body;
 import org.newdawn.slick.Color;
-import slickbrickles.*;
 
 /**
  *

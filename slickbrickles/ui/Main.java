@@ -9,8 +9,6 @@
 
 package slickbrickles.ui;
 
-import slickbrickles.*;
-
 /**
  *
  * @author henry

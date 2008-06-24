@@ -12,11 +12,9 @@ package slickbrickles;
 import java.awt.geom.Point2D;
 import net.phys2d.raw.Body;
 import net.phys2d.raw.shapes.Shape;
-import net.phys2d.raw.shapes.Shape;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.InputListener;
-import slickbrickles.ui.MainGame;
 
 
 public abstract class Addable extends Body implements InputListener{

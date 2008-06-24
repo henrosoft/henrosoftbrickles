@@ -10,17 +10,14 @@
 package slickbrickles.bodies;
 
 import java.awt.geom.Point2D;
-import net.phys2d.math.ROVector2f;
-import net.phys2d.math.Vector2f;
 import net.phys2d.raw.Body;
 import net.phys2d.raw.shapes.Box;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import slickbrickles.*;
 import slickbrickles.Addable;
 import slickbrickles.ui.Main;
-import slickbrickles.ui.MainGame;
+import slickbrickles.ui.StateHandler;
 import static slickbrickles.util.Utils.*;
 /**
  *
@@ -32,7 +29,7 @@ public class Pad extends Addable{
     private Ball ball;
     public Pad(float sx, float sy) {
         super(new Box(sx,sy),Body.INFINITE_MASS);
-        setPosition(250,Main.state.SIZE_Y-50);
+        setPosition(250,StateHandler.SIZE_Y-50);
         mySize = new Point2D.Float(sx,sy);
         myColor = new Color(0,0,0);
         Ball b = new Ball(getPosition().getX(), getPosition().getY()-mySize.y/2f-Ball.SIZE_Y/2f,0,0);
@@ -53,7 +50,7 @@ public class Pad extends Addable{
     public void update() {
         if(getPosition().getX()-mySize.x/2.0f<=0 && velocity<0)
                velocity = 0;
-        if(getPosition().getX()+mySize.x/2.0f>Main.state.SIZE_X && velocity>0)
+        if(getPosition().getX()+mySize.x/2.0f>StateHandler.SIZE_X && velocity>0)
                velocity = 0;
         adjustPosition(v(velocity,0),1);
         if(!Main.theGame.hasBegun())
@@ -62,7 +59,7 @@ public class Pad extends Addable{
 
     public void mouseMoved(int oldx, int oldy, int newx, int newy) {
          if(Main.theGame.getMouseEnabled()/* &&
-                newx+mySize.x/2.0f<=Main.state.SIZE_X && 
+                newx+mySize.x/2.0f<=StateHandler.SIZE_X &&
                 newx-mySize.x/2.0f>=0*/)
              setPosition(newx,getPosition().getY());
     }

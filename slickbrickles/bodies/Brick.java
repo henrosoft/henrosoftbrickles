@@ -10,12 +10,10 @@
 package slickbrickles.bodies;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import net.phys2d.raw.Body;
 import net.phys2d.raw.shapes.Box;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
-import slickbrickles.*;
 import slickbrickles.Addable;
 import slickbrickles.ui.Main;
 

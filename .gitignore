@@ -1,6 +1,7 @@
 *.class
 *.jar
 .hidden
+doc
 .classpath
 .project
 *.html
